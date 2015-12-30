@@ -1,6 +1,9 @@
 # What is Project Roleplay? #
 Project roleplay (also known as SourceMode) is a small MTA gamemode project that is designed to show new server owners how Roleplay servers used to be. The project is an open-source based gamemode which is backed up with a MIT license (meaning you can copy, modify and so on) the original branch is here 1B0Y/project-roleplay.
 
+# What is SourceMode? #
+SourceMode is the official name of Project Roleplay. The creator of this gamemode decided to call it "SourceMode" based on an old server that this gamemode is based on called "Kutmode", but since it's open-source, he decided named it "SourceMode" to fit the gamemode he was designing.
+
 # What are the features? #
 The features will be pretty standard. We're not going with the whole "CnR" "Civilian life" crap. We're going back to old school basics. A list of features will be available soon.
 
