@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `password` char(64) NOT NULL COMMENT 'Player''s password (encrypted)',
   `email` tinytext COMMENT 'Player''s email',
   `serial` char(32) DEFAULT NULL COMMENT 'Player''s serial.',
-  `banned` tinyint(1) DEFAULT '0' NOT NULL COMMENT 'Is the player''s account banned?',
+  `banned` tinyint(1) DEFAULT '0' NOT NULL COMMENT 'Is the player''s account banned?'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
