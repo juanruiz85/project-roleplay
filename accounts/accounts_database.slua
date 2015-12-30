@@ -44,7 +44,8 @@ end
 
 function isAccountDataLoaded(element)
 	--Check what "element" is first. If it's a player, we'll grab his username.
-	if type(element) ~= "string" and getElementType(element) == "player" then
+	--if type(element) ~= "string" and getElementType(element) == "player" then
+	if isElement ( element ) and getElementType ( element ) == "player" then
 		username = getPlayerAccount(element)
 	else
 		username = element
@@ -59,7 +60,8 @@ end
 
 function getAllAccountData(element)
 	--Check what "element" is first. If it's a player, we'll grab his username.
-	if type(element) ~= "string" and getElementType(element) == "player" then
+	--if type(element) ~= "string" and getElementType(element) == "player" then
+	if isElement ( element ) and getElementType ( element ) == "player" then
 		username = getPlayerAccount(element)
 	else
 		username = element
@@ -70,7 +72,8 @@ end
 
 function getAccountData(element,key)
 	--Check what "element" is first. If it's a player, we'll grab his username.
-	if type(element) ~= "string" and getElementType(element) == "player" then
+	--if type(element) ~= "string" and getElementType(element) == "player" then
+	if isElement ( element ) and getElementType ( element ) == "player" then
 		username = getPlayerAccount(element)
 	else
 		username = element
@@ -83,7 +86,8 @@ end
 
 function setAccountData(element,key,value)
 	--Check what "element" is first. If it's a player, we'll grab his username.
-	if type(element) ~= "string" and getElementType(element) == "player" then
+	--if type(element) ~= "string" and getElementType(element) == "player" then
+	if isElement ( element ) and getElementType ( element ) == "player" then
 		username = getPlayerAccount(element)
 	else
 		username = element
@@ -107,7 +111,8 @@ end
 
 function flushAccountData(element)
 	--Check what "element" is first. If it's a player, we'll grab his username.
-	if type(element) ~= "string" and getElementType(element) == "player" then
+	--if type(element) ~= "string" and getElementType(element) == "player" then
+	if isElement ( element ) and getElementType ( element ) == "player" then
 		username = getPlayerAccount(element)
 	else
 		username = element

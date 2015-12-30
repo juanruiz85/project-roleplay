@@ -61,6 +61,7 @@ addEventHandler("onPlayerLoggedOut",root,onPlayerLoggedOut)
 
 function onPlayerQuit()
 	if not source or not isElement(source) then return false end
+	outputDebugString ( "Source Info: " .. tostring(source) .. " ." )
 	despawnCharacter(source)
 	flushAccountData(getPlayerAccount(source)) --Force-save the account data
 end
@@ -194,9 +195,9 @@ function despawnCharacter(player)
 	setElementFrozen(player,true)
 	setPlayerMoney(player,0) --Set it to this just incase.
 	triggerEvent("onPlayerDespawned",player)
-	setTimer(triggerClientEvent,250,1,player,"callDespawnTrigger",player)
+	setTimer(triggerClientEvent,250,1,player,"callDespawnTrigger",getRootElement()) -- revisar este linea
 	removeElementData(player,"character")
-	setTimer(triggerClientEvent,250,1,player,"updatePlayerSpawnState",player,false)
+	setTimer(triggerClientEvent,250,1,player,"updatePlayerSpawnState",getRootElement(),false) -- revisar esta linea
 end
 
 --saveCharacterData
