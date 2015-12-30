@@ -101,6 +101,9 @@ addCommandHandler("goto",nogoto)
 
 addEventHandler("onPlayerLoggedIn",root,
 function(player)
-	local nogoto = getAccountData(player,"nogoto")
+
+	local playerAccount = getPlayerAccount(player)
+	local nogoto = getAccountData(playerAccount,"nogoto")
 	setElementData(player,"nogoto",nogoto)
+
 end)
