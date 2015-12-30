@@ -19,9 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `mta`
 --
-
 -- --------------------------------------------------------
-
 --
 -- Table structure for table `accountdata`
 --
