@@ -145,6 +145,7 @@ function spawnCharacter(player,data)
 	interior = getAccountData(account,"interior") or 0
 	dimension = getAccountData(account,"dimension") or 0
 	money = getAccountData(account,"money") or 0
+	bankmoney = getAccountData(account,"BankMoney") or 0
 	weapons = fromJSON(getAccountData(account,"weapons") or defWeapons)
 	position = fromJSON(getAccountData(account,"position") or defPosition)
 	x,y,z = position[1],position[2],position[3],position[4]
@@ -160,6 +161,7 @@ function spawnCharacter(player,data)
 	showPlayerHudComponent(player,"all",true)
 	setPlayerMoney(player,money)
 	setElementData(player,"character",data.charName)
+	setElementData(player,"BankMoney", bankmoney)
 	setPlayerNametagColor(player,colors[1],colors[2],colors[3]) --Set the player's nametag color based on his character.
 	
 	--spawn

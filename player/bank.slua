@@ -1,0 +1,26 @@
+--[[
+	Project: SourceMode
+	Version: 1.0
+	Last Edited: 31/12/2015 (juanruiz85)
+	Authors: Jack, juanruiz85
+]]--
+
+--this part is from nogoto code
+local antispam = {}
+
+addEvent("onPlayerLoggedIn",true)
+
+function onStart()
+    for k,v in ipairs(getElementsByType("player")) do
+        if exports.accouts:isPlayerLoggedIn(v) then
+            setElementData(v,"BankMoney",getAccountData(v,"BankMoney") or false)
+        end
+    end
+end
+addEventHandler("onResourceStart",resourceRoot,onStart)
+
+
+addEventHandler("onPlayerLoggedIn",root,
+function(player)
+	-- for now 
+end)

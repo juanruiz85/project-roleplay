@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 29/10/2014 (Jack)
+	Last Edited: 01/01/2016 (juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -43,13 +43,20 @@ end
 function info()
 	if not (exports.accounts:isPlayerLoggedIn()) or not (exports.accounts:isPlayerSpawned()) then return false end
 	
-	local bankMoney = 999999999 --Change this to the export later
+	
+	local bankMoney = nil
 	local nogoto = getElementData(localPlayer,"nogoto")
 	local font = "pricedown"
 	
-	--hud = "Bank: #00FF00$"..exports.utils:convertToMoney(bankMoney).."\n" --Start off with drawing the Bank hud
-	hud = ""
-	
+	-- here if the account not have info about bank will be return on value "0"
+	if not getElementData(localPlayer,"BankMoney") then  -- i want know what happened here
+		bankMoney = "0"
+	else
+		bankMoney = getElementData(localPlayer,"BankMoney")
+	end
+
+	hud = "Bank: #00FF00$"..exports.utils:convertToMoney(bankMoney).."\n" --Start off with drawing the Bank hud
+		
 	--Process it more by adding the Nogoto state
 	if nogoto == true then
 		hud = hud .. "#FFFFFFNogoto: #7cbb00Enabled"
@@ -60,7 +67,7 @@ function info()
 	local width,height = dxGetTextWidth(hud:gsub("#%x%x%x%x%x%x",""),1,font), dxGetFontHeight(1,font)
 	
 	--Thank you ccw for debugging this part.
-	local x,y,w,h = rX/1.17-width/2, rY/3.3-height/2, width, height
+	local x,y,w,h = rX/1.17-width/2, rY/3-height/2, width, height
 	dxDrawText(hud,x,y,x+w,y+h,tocolor(255,255,255,255),1,font,"center", "center", false, false, false, true, true)
 	--dxDrawRectangle(x,y,w,h,tocolor(255,255,255,128))
 end
