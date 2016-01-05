@@ -1,0 +1,53 @@
+--[[
+        Project: SourceMode
+        Version: 1.0
+        Last Edited: 05/01/2016 (juanruiz85)
+        Authors: juanruiz85
+]]--
+
+
+---  Code by Mr_Moose (mta forum) ---
+---  Here we will disable the commands that do not want them to be used
+---  List of commands to disable
+cmdList = {
+    ["register"]=true,
+    ["login"]=true,
+    ["logout"]=true,
+    ["nick"]=true
+}
+ 
+-- Disable unwanted commands
+addEventHandler("onPlayerCommand", getRootElement(),
+function(cmdName)
+     if cmdList[cmdName] then
+          cancelEvent()
+          outputChatBox("This command it's not allowed!", source, 255, 0, 0)
+     end
+end)
+
+---   End code of Mr_Moose  ---
+
+
+
+
+---  Code of MTA Wiki ---
+---  Here we prevent that users do spam with commands
+local commandSpam = {}
+ 
+function preventCommandSpam()
+	if (not commandSpam[source]) then
+		commandSpam[source] = 1
+		-- New person so add to table
+	elseif (commandSpam[source] == 3) then
+		cancelEvent()
+		outputChatBox("Please refrain from command spamming!", source, 255, 0, 0)
+		-- This person is command spamming!
+	else
+		commandSpam[source] = commandSpam[source] + 1
+		-- Add one to the table
+	end
+end
+addEventHandler("onPlayerCommand", getRootElement(), preventCommandSpam)
+setTimer(function() commandSpam = {} end, 1000, 0) -- Clear the table every second
+
+---  End code of MTA Wiki ---

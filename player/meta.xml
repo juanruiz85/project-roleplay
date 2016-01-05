@@ -8,6 +8,7 @@
 	<script src="ucp.slua" type="server"/>
 	<script src="nogoto.slua" type="server"/>
 	<script src="bank.slua" type="server"/>
+	<script src="cmds.slua" type="server"/>
 
 	<file src="news.xml"/>
 	<file src="images/sourcemode.png"/>
