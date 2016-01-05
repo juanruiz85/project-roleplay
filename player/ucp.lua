@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 29/10/2014 (Jack)
+	Last Edited: 05/01/2016 (Juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -219,8 +219,8 @@ function getNews()
         	local model = xmlNodeGetAttribute ( v, "name" )
         	guiGridListSetItemText ( grids["news"], row, news, tostring ( model ), false, false )
     	end
+    	xmlUnloadFile (file);  -- close file
 	end
-    xmlUnloadFile (file);  -- close file
 end
 
 function loadStats()
