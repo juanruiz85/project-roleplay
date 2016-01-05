@@ -211,9 +211,16 @@ addEventHandler("onClientPlayerJoin",root,updatePlayersList)
 addEventHandler("onClientPlayerLeave",root,updatePlayersList)
 
 function getNews()
-	row = guiGridListAddRow(grids["news"])
-	guiGridListSetItemText(grids["news"],row,news,"Feature is unavailable. Please try again later.",false,false)
-	guiGridListSetItemColor(grids["news"],row,news,255,0,0,255)
+	guiGridListClear( grids["news"] )
+	if guiGetVisible(windows["UCP"]) == true then
+	    local file = xmlLoadFile ("news.xml")
+    	for _, v in ipairs ( xmlNodeGetChildren ( file ) ) do
+       		local row = guiGridListAddRow (grids["news"] )
+        	local model = xmlNodeGetAttribute ( v, "name" )
+        	guiGridListSetItemText ( grids["news"], row, news, tostring ( model ), false, false )
+    	end
+	end
+    xmlUnloadFile (file);  -- close file
 end
 
 function loadStats()

@@ -9,5 +9,6 @@
 	<script src="nogoto.slua" type="server"/>
 	<script src="bank.slua" type="server"/>
 
+	<file src="news.xml"/>
 	<file src="images/sourcemode.png"/>
 </meta>
