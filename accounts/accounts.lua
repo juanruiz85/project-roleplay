@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 26/10/2014 (Jack)
+	Last Edited: 01/04/2016 (juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -51,14 +51,14 @@ function onStart()
 	checkboxes["remember"] = guiCreateCheckBox(132, 278, 124, 21, "Remember Details", remember, false, windows["login"])
 	buttons["login-attemptLogin"] = guiCreateButton(27,299,330,26,"Login",false,windows["login"])
 	buttons["login-register"] = guiCreateButton(27,335,330,26,"Register an account",false,windows["login"])
-	buttons["login-recover"] = guiCreateButton(27,371,330,26,"Recover my account",false,windows["login"])
+	--buttons["login-recover"] = guiCreateButton(27,371,330,26,"Recover my account",false,windows["login"])
 	buttons["login-troll"] = guiCreateButton(287,418+16,87,16,"Skip Login",false,windows["login"]) --Comment this out if you're not the troll type ;)
 	labels["login-status"] = guiCreateLabel(29,398,328,20+20,"Welcome to the network of SourceMode!",false,windows["login"])
 	guiLabelSetHorizontalAlign(labels["login-status"], "center", true)
 	guiLabelSetVerticalAlign(labels["login-status"], "top")
 	addEventHandler("onClientGUIClick",buttons["login-attemptLogin"],onAccountClick,false)
 	addEventHandler("onClientGUIClick",buttons["login-register"],onAccountClick,false)
-	addEventHandler("onClientGUIClick",buttons["login-recover"],onAccountClick,false)
+	--addEventHandler("onClientGUIClick",buttons["login-recover"],onAccountClick,false)
 	addEventHandler("onClientGUIClick",buttons["login-troll"],onAccountClick,false)
 	
 	--[[
@@ -156,10 +156,10 @@ function onAccountClick(button,state)
 		elseif (source == buttons["login-register"]) then
 			guiSetVisible(windows["register"],true)
 			guiSetVisible(windows["login"],false)
-		elseif (source == buttons["login-recover"]) then
-			--[[guiSetVisible(windows["recovery"],true)
-			guiSetVisible(windows["login"],false)]]
-			playSound("sound/nope.mp3")
+		--elseif (source == buttons["login-recover"]) then
+		--	--[[guiSetVisible(windows["recovery"],true)
+		--	guiSetVisible(windows["login"],false)]]
+		--	playSound("sound/nope.mp3")
 		
 		--close section
 		elseif (source == buttons["NOPE-fine"]) then
@@ -353,7 +353,7 @@ function accountGUIManager(window,fade,state)
 	if window == "all" then
 		guiSetVisible(windows["login"],state)
 		guiSetVisible(windows["register"],state)
-		guiSetVisible(windows["recovery"],state)
+		--guiSetVisible(windows["recovery"],state)
 		guiSetVisible(windows["NOPE"],state)
 	else
 		if (windows[window]) then
