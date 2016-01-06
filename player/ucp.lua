@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 05/01/2016 (Juanruiz85)
+	Last Edited: 06/01/2016 (Juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -38,7 +38,7 @@ function onStart()
 	tabs["taxi"] = guiCreateTab("Taxi", tabpanel)
 	tabs["vehicles"] = guiCreateTab("Vehicles", tabpanel)
 	tabs["account"] = guiCreateTab("Account", tabpanel)
-	guiSetEnabled(tabs["taxi"],false)
+	--guiSetEnabled(tabs["taxi"],false)
 	guiSetEnabled(tabs["vehicles"],false)
 	
 	--MAIN MENU
@@ -70,10 +70,14 @@ function onStart()
 	updatePlayersList()
 	
 	--TAXI MENU
-	labels["taxi-tobeadded"] = guiCreateLabel(7, 9, 405, 271, "TO BE ADDED <3", false, tabs["taxi"])
-	guiSetFont(labels["taxi-tobeadded"], "default-bold-small")
-	guiLabelSetHorizontalAlign(labels["taxi-tobeadded"], "center", false)
-	guiLabelSetVerticalAlign(labels["taxi-tobeadded"], "center")
+	labels["taxi-title"] = guiCreateLabel(100, 4, 225, 42, "Taxy System", false, tabs["taxi"])
+	guiSetFont(labels["taxi-title"], "sa-header")
+	buttons["taxi-updates"] = guiCreateButton(93, 56, 238, 25, "Go to Destination", false, tabs["taxi"])
+	grids["taxilist"] = guiCreateGridList(10, 85, 406, 195, false, tabs["taxi"])
+	destination = guiGridListAddColumn(grids["taxilist"], "Destination", 0.9)
+	getTaxis()
+	addEventHandler("onClientGUIClick",buttons["taxi-updates"],onUCPClick,false)
+	--guiSetEnabled(buttons["taxi-updates"],true)
 	
 	--VEHICLE MENU
 	labels["vehicles-tobeadded"] = guiCreateLabel(7, 9, 405, 271, "TO BE ADDED <3", false, tabs["vehicles"])
@@ -162,6 +166,67 @@ function onUCPClick(button,state)
 			guiSetVisible(windows["UCP"],false)
 			showCursor(false)
 			triggerServerEvent("changeCharacter",localPlayer,localPlayer)
+		elseif (source == buttons["taxi-updates"]) then
+
+			-- We verify that the player is not in a car or in an interior
+			if ( isPedInVehicle( localPlayer ) ) then
+			return
+			outputChatBox("You can't make this Action if you are in a Car Genius...", 255, 5, 15) 	  
+			end
+
+			if ( getElementInterior(localPlayer) ~= 0 ) or ( getElementDimension ( localPlayer ) ~= 0) then	
+			return
+				outputChatBox("You must be outside to call a taxi!", 255, 5, 15) 	  
+			end
+
+			-- we need load again the xml because i have problem making a table  but of this way is more easy but not the best way
+			local file = xmlLoadFile ("taxi.xml")
+			for _, v in ipairs ( xmlNodeGetChildren ( file ) ) do
+				local taxiname = xmlNodeGetAttribute ( v, "name" )
+				local seleccion = tostring(guiGridListGetItemText ( grids["taxilist"], guiGridListGetSelectedItem (grids["taxilist"] ), 1 ))
+				if seleccion == taxiname then
+					local taxiX = xmlNodeGetAttribute ( v, "x" )
+					local taxiY = xmlNodeGetAttribute ( v, "y" )
+					local taxiZ = xmlNodeGetAttribute ( v, "z" )
+					
+					-- Here we calculate the distance between the player and the destination
+					local x, y, z = getElementPosition ( localPlayer )
+					local distance = getDistanceBetweenPoints2D ( x, y, tonumber(taxiX), tonumber(taxiY) ) / 2
+					
+					-- Here we do an integer, since the money is managed in integers
+					local distresult = math.ceil ( distance )
+					local distresult1 = math.ceil ( distance / 2 )
+					outputChatBox ( "The Distance between " ..getPlayerName(localPlayer).. " to the" .. taxiname:lower() .. " is "  ..distresult.. " meters.")
+					outputChatBox ( "The taxy cost for " ..getPlayerName(localPlayer).. " is the "  ..tostring(distresult1).. "." )
+					
+					--- the next will be the code for move the player and effects
+					vehicle = createVehicle(420, x+3, y, z+.3) 
+					taxista = createPed(255, x, y, z)
+					setTimer ( setElementPosition, 1000,1,vehicle,taxiX,taxiY,taxiZ + .3)
+					setTimer ( setElementPosition, 1000,1,localPlayer,taxiX+3,taxiY,taxiZ + 1)
+					warpPedIntoVehicle(taxista, vehicle)
+					setTimer ( destroyElement, 7000,1, taxista)
+					setTimer ( destroyElement, 7000,1, vehicle)
+					setTimer(setElementFrozen,2200,1,vehicle,true)
+					setTimer(function(localPlayer)
+					if isElement (localPlayer) then
+					setCameraTarget(localPlayer)
+					end
+					end,1900,1,source)
+					fadeCamera (false, 1.0, 0, 0, 0 )         -- fade the player's camera to red over a period of 1 second
+					setTimer ( fadeCameraDelayed, 1900, 1, localPlayer ) 
+					outputChatBox("You will going to your destination in a some seconds, Thanks for use The Taxi System!", 155, 155, 155)
+
+					-- here we take the money of the player :)
+					triggerServerEvent("onPlayerpayfortaxi", localPlayer, localplayer, distresult1)
+
+					-- Hidden the menu 
+					local state = guiGetVisible(windows["UCP"])
+					guiSetVisible(windows["UCP"],not state)
+					showCursor(not state)
+				end
+			end
+			xmlUnloadFile (file);  -- close file	
 		end
 	end
 end
@@ -223,6 +288,19 @@ function getNews()
 	end
 end
 
+function getTaxis()
+	guiGridListClear( grids["taxilist"] )
+	if guiGetVisible(windows["UCP"]) == true then
+	    local file = xmlLoadFile ("taxi.xml")
+    	for _, v in ipairs ( xmlNodeGetChildren ( file ) ) do
+       		local row = guiGridListAddRow (grids["taxilist"] )
+        	local model = xmlNodeGetAttribute ( v, "name" )
+        	guiGridListSetItemText ( grids["taxilist"], row, destination, tostring ( model ), false, false )
+    	end
+    	xmlUnloadFile (file);  -- close file
+	end
+end
+
 function loadStats()
 	row = guiGridListAddRow(grids["accounts-stats"])
 	guiGridListSetItemText(grids["accounts-stats"],row,stats,"Stats unavailable. Try again later",false,false)
@@ -235,3 +313,9 @@ function updateAccounts(username,lastLogin,playtime)
 	guiSetText(labels["accounts-playtime"],playtime)
 end
 addEventHandler("updateAccounts",root,updateAccounts)
+
+function fadeCameraDelayed(player) -- This function prevents debug warnings when the player disconnects while the timer is running.
+      if (isElement(player)) then
+            fadeCamera(true, 0.5)
+      end
+end

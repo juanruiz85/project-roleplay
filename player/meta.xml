@@ -1,6 +1,6 @@
 <meta>
 	<info author="Jack" name="Player" description="Player Manager - UCP, Death manager, Res warning, etc..." version="1.0"/>
-	
+	<min_mta_version client="1.5" server="1.5" />
 	<script src="hud.lua" type="client"/>
 	<script src="ucp.lua" type="client"/>
 	<script src="blips.lua" type="client"/>
@@ -11,5 +11,6 @@
 	<script src="cmds.slua" type="server"/>
 
 	<file src="news.xml"/>
+	<file src="taxi.xml"/>
 	<file src="images/sourcemode.png"/>
 </meta>

@@ -8,6 +8,7 @@
 addEvent("onPlayerLoggedIn",true)
 addEvent("logoutPlayer",true)
 addEvent("changeCharacter",true)
+addEvent("onPlayerpayfortaxi",true)
 
 function onStart()
 	for k,v in ipairs(getElementsByType("player")) do
@@ -39,3 +40,17 @@ function changeCharacter(player)
 	exports.accounts:changeCharacter(player)
 end
 addEventHandler("changeCharacter",root,changeCharacter)
+
+
+function taketaximoney(player, cash)
+	if not client then
+		client = player
+		outputDebugString(tostring(client))
+	end
+
+	if not cash then return end
+	
+	if not client or not isElement(client) or not getElementType(client) == "player" then error("Player not found") end
+	setTimer(takePlayerMoney,2200,1,client,tonumber(cash))
+end
+addEventHandler("onPlayerpayfortaxi",root,taketaximoney)
