@@ -18,6 +18,7 @@ addEvent("checkCharacterName",true)
 local defPosition = "[ [ 2036.578125, 1543.389648, 10.8203125, 90 ] ]"
 local defWeapons = "[ [ ] ]"
 local blockedWeapons = {[35]=true,[36]=true,[38]=true,[17]=true,[39]=true,[9]=true}
+local defPlayerTeam = "Players"
 
 function onPlayerSelectCharacter(data)
 	if not client or not isElement(client) then return false end
@@ -146,6 +147,7 @@ function spawnCharacter(player,data)
 	dimension = getAccountData(account,"dimension") or 0
 	money = getAccountData(account,"money") or 0
 	bankmoney = getAccountData(account,"BankMoney") or 0
+	playerteam = getAccountData(account,"playerteam")
 	weapons = fromJSON(getAccountData(account,"weapons") or defWeapons)
 	position = fromJSON(getAccountData(account,"position") or defPosition)
 	x,y,z = position[1],position[2],position[3],position[4]
@@ -164,6 +166,13 @@ function spawnCharacter(player,data)
 	setElementData(player,"BankMoney", bankmoney)
 	setPlayerNametagColor(player,colors[1],colors[2],colors[3]) --Set the player's nametag color based on his character.
 	
+	--If one player not have team will be added to default team
+	if not playerteam then
+		setPlayerTeam( player, getTeamFromName(defPlayerTeam))
+	else	
+		setPlayerTeam(player, getTeamFromName(playerteam))
+	end
+
 	--spawn
 	setTimer(
 		function()
@@ -229,6 +238,7 @@ function saveCharacterData(player)
 	local x,y,z = getElementPosition(player)
 	local _,_,rot = getElementRotation(player)
 	local position = toJSON({x,y,z,rot})
+	local playerTeam = getPlayerTeam(player)
 	
 	--Now to update our data!
 	setAccountData(account,"health",getElementHealth(player))
@@ -238,6 +248,7 @@ function saveCharacterData(player)
 	setAccountData(account,"weapons",weapons)
 	setAccountData(account,"position",position)
 	setAccountData(account,"money",getPlayerMoney(player))
+	setAccountData(account,"playerteam",tostring(getTeamName(playerTeam)))
 end
 
 --addCharacters
