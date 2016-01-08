@@ -59,9 +59,9 @@ function info()
 		
 	--Process it more by adding the Nogoto state
 	if nogoto == true then
-		hud = hud .. "#FFFFFFNogoto: #7cbb00Enabled"
+		--hud = hud .. "#FFFFFFNogoto: #7cbb00Enabled"
 	elseif nogoto == false then
-		hud = hud .. "#FFFFFFNogoto: #f65314Disabled"
+		--hud = hud .. "#FFFFFFNogoto: #f65314Disabled"
 	end
 	
 	local width,height = dxGetTextWidth(hud:gsub("#%x%x%x%x%x%x",""),1,font), dxGetFontHeight(1,font)

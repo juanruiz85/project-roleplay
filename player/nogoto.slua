@@ -96,8 +96,8 @@ function nogoto(player,cmd,...)
 		end
 	end
 end
-addCommandHandler("nogoto",nogoto)
-addCommandHandler("goto",nogoto)
+--addCommandHandler("nogoto",nogoto)
+--addCommandHandler("goto",nogoto)
 
 addEventHandler("onPlayerLoggedIn",root,
 function(player)
