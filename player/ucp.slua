@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 29/10/2014 (Jack)
+	Last Edited: 07/01/2016 (juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -19,16 +19,16 @@ function onStart()
 end
 addEventHandler("onResourceStart",resourceRoot,onStart)
 
-function onPlayerLogin()
-	if not client or not isElement(client) then return false end
+addEventHandler("onPlayerLoggedIn",root,
+function(player)
+	if not player or not isElement(player) then return false end
 	
-	local account = getPlayerAccount(client)
-	local lastLogin = getAccountData(client,"lastLogin")
-	local playtime = getAccountData(client,"playtime")
-	
-	triggerClientEvent(client,"updateAccounts",client,account,lastLogin,playtime)
-end
-addEventHandler("onPlayerLoggedIn",root,onPlayerLogin)
+	local account = exports.accounts:getPlayerAccount(player)
+	local lastLogin = getElementData(player, "LastLogin")
+	--local playtime = exports.accounts:getAccountData(account,"playtime")
+
+	triggerClientEvent(player,"updateAccounts",player,account,lastLogin,playtime)
+end)
 
 function logoutPlayer(player)
 	exports.accounts:logoutPlayer(player)

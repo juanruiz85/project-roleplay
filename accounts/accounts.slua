@@ -129,7 +129,13 @@ function logIn(username,password,remember,encrypted)
 			setElementData(client,"username",username)
 			setElementData(client,"ID",results[1].id)
 			dbExec(connection,"UPDATE accounts SET serial=? WHERE username=?",getPlayerSerial(client),username)
-			setAccountData(getPlayerAccount(client),"lastLogin",exports.utils:getDateAndTime())
+			--Enabling the info of last login in players menu maybe not is the best way but for now it's working
+			local query = dbQuery(connection,"SELECT value FROM accountdata WHERE username=? and name='lastLogin'",username)
+			local pollquery, row, errmsg = dbPoll( query, -1 )
+			outputServerLog( "Last Login of:  " .. tostring(username) .. "  was  " .. tostring(pollquery[1].value) .. ".")
+			setElementData(client,"LastLogin", tostring(pollquery[1].value))
+			dbExec(connection,"UPDATE accountdata SET value=? WHERE name='lastLogin' AND username=?",tostring(exports.utils:getDateAndTime()),tostring(username))
+			--setAccountData(getPlayerAccount(client),"lastLogin",exports.utils:getDateAndTime()) -- i disabled this because i cant get the live info :(
 			triggerClientEvent(client,"returnUpdateStatus",client,"login","Handshaking...")
 			triggerClientEvent(client,"updatePlayerCache",client,username,password,remember)
 			if (isAccountDataLoaded(username)) then

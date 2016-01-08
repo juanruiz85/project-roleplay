@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 06/01/2016 (Juanruiz85)
+	Last Edited: 07/01/2016 (juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -308,13 +308,15 @@ function loadStats()
 end
 
 function updateAccounts(username,lastLogin,playtime)
-	guiSetText(labels["accounts-username"],username)
-	guiSetText(labels["accounts-lastLogin"],lastLogin)
-	guiSetText(labels["accounts-playtime"],playtime)
+	
+	guiSetText(labels["accounts-username"],"Username: " .. tostring(username))
+	guiSetText(labels["accounts-lastlogin"],"Last Logged In:  " .. tostring(lastLogin))
+	--guiSetText(labels["accounts-playtime"],playtime)
 end
 addEventHandler("updateAccounts",root,updateAccounts)
 
-function fadeCameraDelayed(player) -- This function prevents debug warnings when the player disconnects while the timer is running.
+-- Taxy System --> This function prevents debug warnings when the player disconnects while the timer is running.
+function fadeCameraDelayed(player) 
       if (isElement(player)) then
             fadeCamera(true, 0.5)
       end
