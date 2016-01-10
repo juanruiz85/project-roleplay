@@ -54,3 +54,31 @@ function taketaximoney(player, cash)
 	setTimer(takePlayerMoney,2200,1,client,tonumber(cash))
 end
 addEventHandler("onPlayerpayfortaxi",root,taketaximoney)
+
+
+-- Vehicle System --> 
+veh = {}
+
+addEvent ("getCar", true)
+addEventHandler ("getCar", root,
+function(car)
+    if veh[source] and isElement( veh[source] ) then destroyElement( veh[source] ) 
+	veh[source] = nil 
+	end
+    local carID = getVehicleModelFromName (car)
+    local x,y,z = getElementPosition(source)
+    local carName = getVehicleNameFromModel (carID)
+    veh[source] = createVehicle(carID, x,y,z)
+    setVehicleColor(veh[source], 255, 255, 255)
+    warpPedIntoVehicle(source, veh[source])
+    outputChatBox ( "* #FF5A5ACreated #ffffff"..carName.." #FF5A5Awas successful!",source,255,90,90,true)       
+end
+)
+
+--This function detroy the vehicles create by the player when this quit of server
+addEventHandler ( "onPlayerQuit", root,	
+function ()
+	if veh[source] and isElement( veh[source] ) then destroyElement( veh[source] ) 
+	veh[source] = nil 
+	end
+end)

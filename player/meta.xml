@@ -12,5 +12,6 @@
 
 	<file src="news.xml"/>
 	<file src="taxi.xml"/>
+	<file src="vehicles.xml"/>
 	<file src="images/sourcemode.png"/>
 </meta>

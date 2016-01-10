@@ -39,7 +39,7 @@ function onStart()
 	tabs["vehicles"] = guiCreateTab("Vehicles", tabpanel)
 	tabs["account"] = guiCreateTab("Account", tabpanel)
 	--guiSetEnabled(tabs["taxi"],false)
-	guiSetEnabled(tabs["vehicles"],false)
+	--guiSetEnabled(tabs["vehicles"],false)
 	
 	--MAIN MENU
 	labels["main-title"] = guiCreateLabel(17, 4, 225, 42, "Source Mode", false, tabs["main"])
@@ -80,10 +80,11 @@ function onStart()
 	--guiSetEnabled(buttons["taxi-updates"],true)
 	
 	--VEHICLE MENU
-	labels["vehicles-tobeadded"] = guiCreateLabel(7, 9, 405, 271, "TO BE ADDED <3", false, tabs["vehicles"])
-	guiSetFont(labels["vehicles-tobeadded"], "default-bold-small")
-	guiLabelSetHorizontalAlign(labels["vehicles-tobeadded"], "center", false)
-	guiLabelSetVerticalAlign(labels["vehicles-tobeadded"], "center")
+	grids["vehicles"] = guiCreateGridList(7, 4, 213, 276, false, tabs["vehicles"])
+	vehicles = guiGridListAddColumn(grids["vehicles"], "Vehicles", 0.9)
+	buttons["vehicles-spawn"] = guiCreateButton(228, 75, 188, 28, "Spawn", false, tabs["vehicles"])
+	getVehiclesList()
+	addEventHandler("onClientGUIClick",buttons["vehicles-spawn"],onUCPClick,false)
 	
 	--ACCOUNTS MENU
 	buttons["accounts-logout"] = guiCreateButton(27, 257, 116, 23, "Logout", false, tabs["account"])
@@ -227,6 +228,27 @@ function onUCPClick(button,state)
 				end
 			end
 			xmlUnloadFile (file);  -- close file	
+		elseif (source == buttons["vehicles-spawn"]) then
+			-- Hidden the menu 
+			local state = guiGetVisible(windows["UCP"])
+			guiSetVisible(windows["UCP"],not state)
+			showCursor(not state)
+			-- We verify that the player is not in a car or in an interior
+			if ( isPedInVehicle( localPlayer ) ) then 
+			return 
+				outputChatBox("You can't make this Action if you are in a Car Genius...", 255, 5, 15) 	  
+			end
+
+			if ( getElementInterior(localPlayer) ~= 0 ) or ( getElementDimension ( localPlayer ) ~= 0) then	
+			return
+				outputChatBox("You must be outside to use a vehicle", 255, 5, 15) 	  
+			end
+			
+			if (guiGridListGetSelectedItem (grids["vehicles"])) then
+			local car = guiGridListGetItemText (grids["vehicles"], guiGridListGetSelectedItem (grids["vehicles"]), 1)
+			if car == "" or car == nil then outputChatBox( "please selected car from list.",255,90,90,true ) return end
+			triggerServerEvent ("getCar", localPlayer, car)
+			end
 		end
 	end
 end
@@ -296,6 +318,20 @@ function getTaxis()
        		local row = guiGridListAddRow (grids["taxilist"] )
         	local model = xmlNodeGetAttribute ( v, "name" )
         	guiGridListSetItemText ( grids["taxilist"], row, destination, tostring ( model ), false, false )
+    	end
+    	xmlUnloadFile (file);  -- close file
+	end
+end
+
+function getVehiclesList()
+	guiGridListClear( grids["vehicles"] )
+	if guiGetVisible(windows["UCP"]) == true then
+	    local file = xmlLoadFile ("vehicles.xml")
+    	for _, v in ipairs ( xmlNodeGetChildren ( file ) ) do
+       		local row = guiGridListAddRow (grids["vehicles"])
+        	local id = xmlNodeGetAttribute ( v, "id" )
+        	local name = getVehicleNameFromModel (tonumber(id))
+        	guiGridListSetItemText ( grids["vehicles"], row, vehicles, tostring ( name ), false, false )
     	end
     	xmlUnloadFile (file);  -- close file
 	end
