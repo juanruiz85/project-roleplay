@@ -46,12 +46,12 @@ function onPlayerDeath(ammo,killer,weapon,bodypart)
 	local weapons = exports.utils:getPlayerWeapons(source)
 	
 	--Make sure we kill any timers that the player has (just incase)
-	for k,v in pairs(respawnTimers) do
-		if v and isTimer(v) then 
-			killTimer(v) 
-			respawnTimers[k] = nil
-		end
-	end
+	--for k,v in pairs(respawnTimers) do
+	--	if v and isTimer(v) then 
+	--		killTimer(v) 
+	--		respawnTimers[k] = nil
+	--	end
+	--end
 	
 	respawnTimers["fadeOut"] = setTimer(fadeCamera,1000,1,source,false,2.0,255,255,255)
 	respawnTimers["respawn"] = setTimer(spawnPlayer,3000,1,source,x,y,z,rot,weapons)
