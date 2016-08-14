@@ -71,7 +71,6 @@ function greenzoneManager(colshape,state,element,dim)
 			protected[element] = true --protect the vehicle too.			
 			--Set not damage to vehices
 			if protected[element] and not (getVehicleType(element) == "Plane") then --We still want planes to receive damage!
-				outputChatBox("You car have protection.",v,255,0,0)
 				setVehicleDamageProof(element, true)
 			end	
 			return true
@@ -94,7 +93,6 @@ function greenzoneManager(colshape,state,element,dim)
 			end
 			--Set damage to vehices
 			if protected[element] == nil and not (getVehicleType(element) == "Plane") then --We still want planes to receive damage!
-				outputChatBox("You car not have protection.",v,255,0,0)
 				setVehicleDamageProof(element, false)
 			end	
 			return true
