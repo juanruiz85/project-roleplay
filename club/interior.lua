@@ -1,3 +1,10 @@
+--[[
+	Project: SourceMode
+	Version: 1.0
+	Last Edited: 13/08/2016 (juanruiz85)
+	Authors: juanruiz85
+]]--
+
 local interiors = {
 {marker = {1960,1560.45,11,0,0}, coords = {1948.22,1576,-46.71,1,1000, 180}}, --Club Enterance
 {marker = {1948,1578.65,-46,1,1000}, coords = {1960,1558.3,10.45,0,0, 180}}, --Club Exit
