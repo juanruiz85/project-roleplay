@@ -13,6 +13,7 @@ Just do clic en Download Zip :P
 # How to use? #
 
 1.- fill the file localted on \database\settings.lua with the info of your server (the tables in the database are automatically created)
+
 2.- put this in your file "mtaserver.conf" if you use other order maybe you will have problems with the gui
 
     <resource src="admin" startup="1" protected="0" />
