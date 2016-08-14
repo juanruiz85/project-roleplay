@@ -1,7 +1,7 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 28/10/2014 (Jack)
+	Last Edited: 14/08/2016 (juanruiz85)
 	Authors: Jack
 ]]--
 
@@ -47,6 +47,8 @@ function onStart()
 end
 addEventHandler("onResourceStart",resourceRoot,onStart)
 
+
+
 function greenzoneManager(colshape,state,element,dim)
 	if not colshape then return false end
 	if not state then return false end
@@ -57,6 +59,7 @@ function greenzoneManager(colshape,state,element,dim)
 	
 	if (state == "hit") then
 		if (getElementType(element) == "vehicle") then
+
 			--Find driver occupants
 			local occupants = getVehicleOccupants(element)
 			for k,v in ipairs(occupants) do
@@ -65,7 +68,12 @@ function greenzoneManager(colshape,state,element,dim)
 				protected[v] = true
 			end
 			--Make sure the vehicle is within the limit
-			protected[element] = true --protect the vehicle too.
+			protected[element] = true --protect the vehicle too.			
+			--Set not damage to vehices
+			if protected[element] and not (getVehicleType(element) == "Plane") then --We still want planes to receive damage!
+				outputChatBox("You car have protection.",v,255,0,0)
+				setVehicleDamageProof(element, true)
+			end	
 			return true
 		elseif (getElementType(element) == "player") then
 			protected[element] = true
@@ -84,6 +92,11 @@ function greenzoneManager(colshape,state,element,dim)
 				end
 				protected[element] = nil
 			end
+			--Set damage to vehices
+			if protected[element] == nil and not (getVehicleType(element) == "Plane") then --We still want planes to receive damage!
+				outputChatBox("You car not have protection.",v,255,0,0)
+				setVehicleDamageProof(element, false)
+			end	
 			return true
 		elseif (getElementType(element) == "player") then
 			if protected[element] then
@@ -97,10 +110,3 @@ function greenzoneManager(colshape,state,element,dim)
 end
 addEventHandler("onColShapeHit",root,function(hD,mD) greenzoneManager(source,"hit",hD,mD ) end)
 addEventHandler("onColShapeLeave",root,function(hD,mD) greenzoneManager(source,"leave",hD,mD) end)
-
-function onVehicleDamage()
-	if protected[source] and not (getVehicleType(source) == "Plane") then --We still want planes to receive damage!
-		cancelEvent()
-	end
-end
-addEventHandler("onVehicleDamage",root,onVehicleDamage)
