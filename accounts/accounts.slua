@@ -37,7 +37,7 @@ local cameras = {
 function onStart()
 	for k,v in ipairs(getElementsByType("player")) do
 		setTimer(switchCamera,250,1,v,"main")
-		showPlayerHudComponent(v,"all",false)
+		setPlayerHudComponentVisible(v,"all",false)
 		setTimer(triggerClientEvent,250,1,v,"setPlayerGaming",v,false)
 	end
 	
@@ -52,7 +52,7 @@ addEventHandler("onResourceStart",resourceRoot,onStart)
 addEventHandler("onPlayerJoin",root,
 function()
 	switchCamera(source,"main")
-	showPlayerHudComponent(source,"all",false)
+	setPlayerHudComponentVisible(source,"all",false)
 	triggerClientEvent(source,"setPlayerGaming",source,false)
 end)
 
@@ -77,7 +77,7 @@ function onStop()
 	for k,v in ipairs(getElementsByType("player")) do
 		--kickPlayer(v,"Restarting...") --Force save!
 		setCameraTarget(v)
-		showPlayerHudComponent(v,"all",true)
+		setPlayerHudComponentVisible(v,"all",true)
 		triggerEvent("onPlayerLoggedOut",v)
 	end
 end
@@ -172,7 +172,7 @@ function logOut(player)
 		triggerClientEvent(player,"setPlayerGaming",player,false)
 		triggerEvent("onPlayerLoggedOut",player)
 		switchCamera(player,"main")
-		showPlayerHudComponent(player,"all",false)
+		setPlayerHudComponentVisible(player,"all",false)
 		removeElementData(player,"username")
 		removeElementData(player,"ID")
 		triggerClientEvent("triggerClientPlayerLoggedOut",player)

@@ -1,6 +1,6 @@
 mysql = {}
-mysql.username = "root"
+mysql.username = "mta"
 mysql.password = ""
 mysql.port = 3306
-mysql.host = "localhost"
+mysql.host = "127.0.0.1"
 mysql.database = "mta"
