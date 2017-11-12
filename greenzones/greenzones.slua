@@ -1,16 +1,20 @@
 --[[
 	Project: SourceMode
 	Version: 1.0
-	Last Edited: 14/08/2016 (juanruiz85)
+	Last Edited: oct 11, 2017 (juanruiz85)
 	Authors: Jack
 ]]--
 
 local protected = {} --elements's inside greenzones
 local greenzones = {} --greenzone cols
 local positions = { --greenzone positions
-{x = 1931.6513671, y = 1399.024414, width = 150, height = 300},
-{x = 1577.4914062, y = 1723.277734, width = 59.7, height = 139.9},
-{x = 1162.8808593, y = -1385.09375, width = 27.5, height = 94.2}
+
+{x = 1835, y = 1463, width = 230, height = 245},
+{x = 1596, y = 1815, width = 23, height = 11},
+{x = -2671.5, y = 631.5, width = 40, height = 11},
+{x = -2213, y = -2310, width = 20, height = 20},
+{x = 1172, y = -1342, width = 15, height = 37},
+{x = 1996, y = -1451, width = 57, height = 57}
 }
 
 --Custom events

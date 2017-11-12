@@ -1,0 +1,7 @@
+<meta>
+	<info author="Mabako" name="nametag" description="Paradise Script " version="1.0"/>
+	<script src="nametags_c.lua" type="client" cache="false"/>
+    <script src="chat_bubbles.lua" cache="false"/><!-- Client-side code is part of nametags_c.lua -->
+	<file src="chat.png"/>
+	<file src="console.png"/>
+</meta>
