@@ -1,6 +1,0 @@
-<meta>
-    <info author="DLmass" name="club" description="Club interior near pirateship" version="1.0"/>
-    
-    <script src="interior.lua" type="server" />
-    <map src="club.map" dimension="0"/>
-</meta>
